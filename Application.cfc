@@ -55,14 +55,14 @@ component{
 			// }
 			try{
 				data = deserializeJson(fileRead('config/company.json'));
-				request.company =  new model.orm.Company().init(argumentCollection = data)
+				request.company =  new model.Company().init(argumentCollection = data)
 
 			}catch (any e){
 				writedump(var=e);
-				request.company = new model.orm.Company()
+				request.company = new model.Company()
 			}
 			if (isNull(request.company)){
-				request.company = new model.orm.Company()
+				request.company = new model.Company()
 			}
 
             // relocate to admin if not completely setup
