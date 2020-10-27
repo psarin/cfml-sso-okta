@@ -1,8 +1,4 @@
-/**
-*   @output         false
-*   @persistent     true
-*/
-component
+component persistent="true" output="true"
 {
     property name="id"                  fieldtype="id"      generator="native";
     property name="companyName"         ormtype="string"    length="150";
@@ -13,9 +9,30 @@ component
     property name="createdOn"           ormtype="timestamp";
     property name="updatedOn"           ormtype="timestamp";
 
-    public void function init(){
-        setCreatedOn(getHttpTimeString());
-    }
+
+    public function init(){
+        for (var key in arguments){
+            if (StructKeyExists(arguments, key) and not isStruct(arguments[key])){
+                var newVal = arguments[key];
+				if (isArray(newVal)){
+					newVal = arrayToList(newVal);
+				}
+
+                if (not isStruct(newVal) and (newVal eq "''" or newVal eq '""' or trim(newVal) eq "" or IsNull(newVal))){
+                    newVal = null;
+				}
+                variables[key] = newVal;
+
+            }
+        }
+
+        if (isNull(this.createdOn)){
+			setCreatedOn(getHttpTimeString());
+        }
+
+        return this;
+	}
+
 
     public void function preUpdate(struct oldData ){
         setUpdatedOn(getHttpTimeString());

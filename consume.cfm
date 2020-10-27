@@ -33,13 +33,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SAML Login - One Login</title>
-    <link rel="shortcut icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro">
-    <link rel="stylesheet" href="/includes/css/theme.css">
+	<title>SAML Login - One Login</title>
+	<cfoutput>
+		<link rel="shortcut icon" type="image/png" href="/favicon.png">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro">
+		<link rel="stylesheet" href="/#request.rootDir#/includes/css/theme.css">
+	</cfoutput>
 </head>
 <body>
     <cfoutput>

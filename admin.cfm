@@ -4,8 +4,11 @@
         request.company.setConsumeUrl(form.consumeUrl);
         request.company.setIssuerUrl(form.issuerUrl);
         request.company.setIssuerID(form.issuerID);
-        request.company.setCertificate(form.certificate);
-        transaction { entitySave(request.company); }
+		request.company.setCertificate(form.certificate);
+
+		data = serializeJson(request.company)
+		fileWrite("config/company.json", data)
+        //transaction { entitySave(request.company); }
         session.saved = true;
         sleep(250);
         location(cgi.http_referer,false);
@@ -15,12 +18,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SAML Login - One Login</title>
-    <link rel="shortcut icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700">
-    <link rel="stylesheet" href="/includes/css/theme.css">
+	<title>SAML Login - One Login</title>
+	<cfoutput>
+		<link rel="shortcut icon" type="image/png" href="/favicon.png">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700">
+		<link rel="stylesheet" href="/#request.rootDir#/includes/css/theme.css">
+	</cfoutput>
 </head>
 <body>
     <div class="container">
@@ -34,7 +39,7 @@
         </cfif>
         <cfif request.company.isReady()>
             <div class="well well-small text-center text-success">
-                <span class="glyphicon glyphicon-ok"></span> Application is ready to use, <a href="/">click here</a> to go to test request.
+                <span class="glyphicon glyphicon-ok"></span> Application is ready to use, <a href="/#request.rootDir#">click here</a> to go to test request.
             </div>
         </cfif>
         <form role="form" method="post" class="simple-validation">
@@ -87,10 +92,12 @@
             </span>
         </form>
         </cfoutput>
-    </div>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="/includes/js/scripts.js"></script>
-    <script src="/includes/js/validation.min.js"></script>
+	</div>
+	<cfoutput>
+		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="/#request.rootDir#/includes/js/scripts.js"></script>
+		<script src="/#request.rootDir#/includes/js/validation.min.js"></script>
+	</cfoutput>
 </body>
 </html>
