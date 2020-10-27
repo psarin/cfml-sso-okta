@@ -9,15 +9,17 @@ component{
 	objUtils = new utils()
 
     /**
-    * @type struct
+    * @type String
     * @hint Name of IdProvider, to be used to get correct settings
 	*/
 	property name="idProvider" type="string";
+
 	/**
     * @type struct
-    * @hint Contains the config to be used in XML parsing to get signature, assertion, subject, etc blocks
+    * @hint Contains the config for the id Provider
     */
-	property name="signatureConfig" type="struct";
+	property name="idProviderModel" type="struct";
+
     /**
     * @type struct
     * @hint Contains the conditions returned in a valid response
@@ -25,10 +27,9 @@ component{
 	property name="conditions" type="struct";
 
     function init(){
-		this.signatureConfig = {
-			localName: 'Assertion',
-			namespaceUri: 'urn:oasis:names:tc:SAML:2.0:assertion'
-		}
+		variables.idProvider = arguments.idProvider
+		variables.idProviderModel = arguments.idProviderModel
+
         return this;
 	}
 
@@ -47,7 +48,7 @@ component{
 
 		var isValidSignature = objSignature.verifySignature(argumentCollection = {
 			xmlSignature: objSignature.buildSignature(samlResponse),
-			certificate: objCertificate.generateCertificate()
+			certificate: objCertificate.generateCertificate(objCertificate.getCertInfo(idProviderModel = variables.idProviderModel))
 		})
 
 		return {

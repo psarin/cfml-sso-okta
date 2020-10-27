@@ -14,7 +14,7 @@ component {
 	public function decodeSAMLResponse (string samlResponse= "") hint="Decode a SAML authentication response from Azure AD"{
 
 		var cleanSAMLResponse = replaceNoCase(arguments.SAMLResponse,"SAMLResponse=","","all");
-		var xmlStr = createObject("java", "javax.xml.bind.DatatypeConverter", "/orrms/server/jars/").parseBase64Binary(base64urldecode(cleanSAMLResponse));
+		var xmlStr = createObject("java", "javax.xml.bind.DatatypeConverter", "./jars/").parseBase64Binary(base64urldecode(cleanSAMLResponse));
 		xmlStr = ToString(xmlStr,"utf-8");
 
 		// Soemtimes a few xtra characters after the closing tag

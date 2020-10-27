@@ -11,10 +11,10 @@ component {
 		samlAssertionBlock.setIdAttributeNS("", "ID", true);
 
 		// Initialize the library, needs to be done at least once and doing more than once won't cause problems
-		Init = CreateObject("Java", "org.apache.xml.security.Init", "/orrms/server/jars/").Init().init();
+		Init = CreateObject("Java", "org.apache.xml.security.Init", "./jars/").Init().init();
 		// Using the samlAssertionBlock Signature, generate a Java XML Security Signature
 		var samlAssertionSignatureBlock = samlAssertionBlock.Signature[1];
-		return CreateObject("java", "org.apache.xml.security.signature.XMLSignature", "/orrms/server/jars/").init(samlAssertionSignatureBlock,"");
+		return CreateObject("java", "org.apache.xml.security.signature.XMLSignature", "./jars/").init(samlAssertionSignatureBlock,"");
 	}
 
 

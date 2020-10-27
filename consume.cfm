@@ -2,7 +2,10 @@
 
 	if (!isNull(form) && !isNull(form.SAMLResponse)){
 		encodedSAMLResponse = form.SAMLResponse
-		objSaml = new saml.saml()
+		objSaml = new saml.saml(argumentCollection = {
+			idProvider: request.identityProvider,
+			idProviderModel: request.company
+		})
 		samlResponse = objSAML.buildPacket(encodedSAMLResponse)
 	}else{
 		samlResponse = null
