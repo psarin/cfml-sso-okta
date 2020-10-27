@@ -7,7 +7,7 @@
 		request.identityProviderModel.setCertificate(form.certificate);
 
 		data = serializeJson(request.identityProviderModel)
-		fileWrite("config/" & request.identityProviderModel & ".json", data)
+		fileWrite("config/" & request.identityProvider & ".json", data)
         session.saved = true;
         sleep(250);
         location(cgi.http_referer,false);
