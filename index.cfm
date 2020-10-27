@@ -14,14 +14,14 @@
 <body>
     <div class="container">
         <!--- APP IS READY - SHOW FORM --->
-		<cfif request.appIsReady>
+		<cfif !isNull(request.identityProvider)>
 			<cfoutput>
 				<cfset postURL = '/' & request.rootDir & '/post.cfm' />
 
 				<form action="#postURL#" class="form-signin text-center simple-validation" role="form" method="post">
 					<h2 class="form-signin-heading text-info">SAML Login Sample</h2>
 					<p>
-						Click below to login using OneLogin.
+						Click below to login using #request.identityProvider#.
 					</p>
 					<span class="frmPrc" style="display:none;">
 						<button class="btn btn-lg btn-default btn-block" type="button" disabled="disabled" style="line-height:35px;">
@@ -29,9 +29,19 @@
 						</button>
 					</span>
 					<span class="frmBtn">
-						<button class="btn btn-lg btn-default btn-block" type="submit">
-							<img src="#request.siteURL#/includes/img/logo-onelogin.png" />
-						</button>
+						<cfswitch expression = "#request.identityProvider#">
+							<cfcase value="okta">
+								<button class="btn btn-lg btn-default btn-block" type="submit">
+								<!--- 							<img src="#request.siteURL#/includes/img/logo-onelogin.png" /> --->
+									<img src="#request.siteURL#/includes/img/logo-okta.svg" style="width:100px;" />
+								</button>
+							</cfcase>
+							<cfcase value="onelogin">
+								<button class="btn btn-lg btn-default btn-block" type="submit">
+									<img src="#request.siteURL#/includes/img/logo-onelogin.png" />
+								</button>
+							</cfcase>
+						</cfswitch>
 					</span>
 					<p>
 						<a href="/#request.rootDir#/admin.cfm">Click here to edit the company settings</a>
@@ -45,8 +55,9 @@
             <div class="well lead setup-instructions">
                 <h1>SAML Login Sample Setup Required</h1>
                 <p>
-                    Welcome to the OneLogin SAML Sample Application. To begin you must create a datasource in your ColdFusion Administrator
-                    labeled <strong>"onelogin_saml_example"</strong>. Once complete, reload this page and the required table will be generated and you
+					Welcome to the SAML Sample Application. To begin, you must specify the identify provider in Application.cfc.<BR/>
+					<pre>request.identityProvider = "okta"</pre>
+					Once complete, reload this page and you
                     will be directed to the configuration page.
                 </p>
             </div>
