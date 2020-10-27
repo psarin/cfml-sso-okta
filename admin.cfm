@@ -42,7 +42,14 @@
                 <span class="glyphicon glyphicon-ok"></span> Application is ready to use, <a href="/#request.rootDir#">click here</a> to go to test request.
             </div>
         </cfif>
-        <form role="form" method="post" class="simple-validation">
+		<form role="form" method="post" class="simple-validation">
+            <div class="form-group">
+                <label for="companyName">Identity Provider</label>
+                <input type="text" class="form-control" id="companyName" name="companyName" disabled value="#encodeForHTML(request.identityProvider)#">
+                <p class="help-block">
+                    The selected identity provider, as specified in Application.cfc.
+                </p>
+            </div>
             <div class="form-group">
                 <label for="companyName">Company Name</label>
                 <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Enter Company Name" value="#encodeForHTML(request.company.getCompanyName())#">
@@ -54,23 +61,22 @@
                 <label for="consumeUrl">Consume URL</label>
                 <input type="text" class="form-control" id="consumeUrl" name="consumeUrl" placeholder="Enter Consume URL (ie: #request.siteURL#consume/)" value="#encodeForHTML(request.company.getConsumeUrl())#">
                 <p class="help-block">
-                    The URL of the consume file for this app. The SAML Response will be posted to this URL
+					The URL of the consume file / service for this app, to which the Identity Provider redirects after authentication and POSTs the SAML Response. This is usually configured on the Identity Provider side but if you supply it here, this value will be checked against the SAML Response from provider.
                 </p>
             </div>
             <div class="form-group required">
                 <label for="issuerUrl">Issuer</label>
                 <input type="text" class="form-control" id="issuerUrl" name="issuerUrl" placeholder="Enter Issuer (ie: #request.siteURL#)" value="#encodeForHTML(request.company.getIssuerUrl())#">
                 <p class="help-block">
-                    The issuer of the authentication request. This would usually be the URL of the issuing web application.
+                    The issuer of the authentication request. This would usually be the URL of the issuing web application and this value is used to post to the proper URL.
                 </p>
             </div>
             <div class="form-group required">
                 <label for="issuerID">Issuer ID</label>
                 <input type="text" class="form-control" id="issuerID" name="issuerID" placeholder="Enter Issuer ID" value="#encodeForHTML(request.company.getIssuerID())#">
                 <p class="help-block">
-                    The ID for this company at the Identity Provider, this value is used to post to the proper URL. You can find
-                    this value after creating the App in OneLogin and clicking on <strong class="text-info">"Single Sign-On"</strong> tab. There will be 3 URLs in that page and
-                    each ends with a numeric value which is your ID. (ie:https://app.onelogin.com/saml/metadata/<strong class="text-success">382730</strong>)
+                    The ID for this company at the Identity Provider and this value is used to post to the proper URL. You can find
+                    this value after creating the App and clicking on <strong class="text-info">"Single Sign-On"</strong> tab.
                 </p>
             </div>
             <div class="form-group required">
