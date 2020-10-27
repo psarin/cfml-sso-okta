@@ -3,21 +3,21 @@
 */
 component{
 
-    this.name               = "OneLogin_SAML_1.0";
+    this.name               = "SAML_Sample_App";
     this.sessionmanagement  = true;
     this.sessiontimeout     = createTimeSpan(0,7,0,0);
-    this.datasource         = "onelogin_saml_example";
 	this.triggerDataMember=true;
 	this.invokeImplicitAccessor=true;
 
+	// Mappings
+	this.mappings['/saml'] = getDirectoryFromPath(getCurrentTemplatePath()) & '/saml'
+
     // java settings
     this.javaSettings       = {
-        LoadPaths       : ["/bin"],
+        LoadPaths       : ["/saml/jars"],
         reloadOnChange  : true,
         watchInterval   : 60
-    };
-
-	this.mappings['/saml'] = getDirectoryFromPath(getCurrentTemplatePath()) & '/saml'
+	};
 
     public boolean function onRequestStart(){
 		request.identityProvider  = "okta";
@@ -28,21 +28,21 @@ component{
             location("./",false);
         }
 
-        // check if company is setup and configured
+        // check if identityProvider is setup and configured
         if (!isNull(request.identityProvider)){
 			try{
 				data = deserializeJson(fileRead('config/#request.identityProvider#.json'));
-				request.company =  createObject('component', 'saml.providers.' & request.identityProvider).init(argumentCollection = data)
+				request.identityProviderModel =  createObject('component', 'saml.providers.' & request.identityProvider).init(argumentCollection = data)
 
 			}catch (any e){
-				request.company =  createObject('component', 'saml.providers.' & request.identityProvider).init()
+				request.identityProviderModel =  createObject('component', 'saml.providers.' & request.identityProvider).init()
 			}
-			if (isNull(request.company)){
-				request.company =  createObject('component', 'saml.providers.' & request.identityProvider).init()
+			if (isNull(request.identityProviderModel)){
+				request.identityProviderModel =  createObject('component', 'saml.providers.' & request.identityProvider).init()
 			}
 
             // relocate to admin if not completely setup
-            if (!findNoCase("admin",cgi.script_name) && !request.company.isReady())
+            if (!findNoCase("admin",cgi.script_name) && !request.identityProviderModel.isReady())
                 location("/#request.rootDir#/admin.cfm",false);
         }
 

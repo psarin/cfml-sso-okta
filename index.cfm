@@ -44,7 +44,7 @@
 						</cfswitch>
 					</span>
 					<p>
-						<a href="/#request.rootDir#/admin.cfm">Click here to edit the company settings</a>
+						<a href="/#request.rootDir#/admin.cfm">Click here to edit the identity provider settings</a>
 						<br /><br />
 						<a href="http://youtu.be/VxS86G4hD-k" class="text-danger" target="_blank">Click here to view demo video</a>
 					</p>

@@ -4,7 +4,7 @@
 		encodedSAMLResponse = form.SAMLResponse
 		objSaml = new saml.saml(argumentCollection = {
 			idProvider: request.identityProvider,
-			idProviderModel: request.company
+			idProviderModel: request.identityProviderModel
 		})
 		samlResponse = objSAML.buildPacket(encodedSAMLResponse)
 	}else{

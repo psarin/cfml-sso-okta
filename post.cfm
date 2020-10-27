@@ -1,6 +1,6 @@
 <cfscript>
   try{
-	isssuerFinalUrl = request.company.getRedirectToIdentityProviderUrl()
+	isssuerFinalUrl = request.identityProviderModel.getRedirectToIdentityProviderUrl()
 
     // now send to identity provider
     location ( isssuerFinalUrl, false);
