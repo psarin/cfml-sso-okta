@@ -33,16 +33,15 @@ component persistent="true" output="true"
         return this;
 	}
 
-
-    public void function preUpdate(struct oldData ){
-        setUpdatedOn(getHttpTimeString());
-    }
-
     public boolean function isReady(){
         // return tru if all fields are set
         return  len(getConsumeUrl()) &&
                 len(getIssuerUrl()) &&
                 len(getIssuerID()) &&
                 len(getCertificate());
-    }
+	}
+
+	public string function getRedirectToIdentityProviderUrl(){
+		return this.getIssuerUrl() & "/" & this.getIssuerID() & "/" & "sso/saml"
+	}
 }
