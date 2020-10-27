@@ -17,57 +17,33 @@ component{
         watchInterval   : 60
     };
 
-    // this is only here for this POC and should not be used in production
-    // this.enableOrm = true;
-    // try{ CreateObject("java","coldfusion.server.ServiceFactory").DatasourceService.verifyDataSource(this.datasource); }
-    // catch(Any e){ this.enableOrm = false; }
-
-    // orm settings
-    // this.ormEnabled     = this.enableOrm;
-    // this.ormSettings    = {
-    //     automanageSession       : false,
-    //     cfclocation             : "/model/orm/",
-    //     dbcreate                : "update",
-    //     flushatrequestend       : false,
-    //     logSQL                  : false,
-    //     useDBForMapping         : false
-	// };
+	this.mappings['/saml'] = getDirectoryFromPath(getCurrentTemplatePath()) & '/saml'
 
     public boolean function onRequestStart(){
-        // pass ormEnabled state to request
-		request.appIsReady  = true;
+		request.identityProvider  = "okta";
 		request.rootDir = "cfml-sso-okta/"
         request.siteURL     = "http" & (cgi.server_port_secure ? "s" : "") & ":" & "//" & cgi.server_name & ":" & cgi.server_port & "/" & request.rootDir;
 
 		if (structKeyExists(url,"reload")){
-            // ormReload();
             location("./",false);
         }
 
         // check if company is setup and configured
-        if (request.appIsReady){
-            // get company
-            // request.company = entityLoadByPK("Company",1);
-            // // create company if nto already created
-            // if (isNull(request.company)){
-            //     request.company = entityNew("Company");
-			//     transaction { entitySave(request.company); }
-			// }
+        if (!isNull(request.identityProvider)){
 			try{
-				data = deserializeJson(fileRead('config/company.json'));
-				request.company =  new model.Company().init(argumentCollection = data)
+				data = deserializeJson(fileRead('config/#request.identityProvider#.json'));
+				request.company =  createObject('component', 'saml.providers.' & request.identityProvider).init(argumentCollection = data)
 
 			}catch (any e){
-				writedump(var=e);
-				request.company = new model.Company()
+				request.company =  createObject('component', 'saml.providers.' & request.identityProvider).init()
 			}
 			if (isNull(request.company)){
-				request.company = new model.Company()
+				request.company =  createObject('component', 'saml.providers.' & request.identityProvider).init()
 			}
 
             // relocate to admin if not completely setup
             if (!findNoCase("admin",cgi.script_name) && !request.company.isReady())
-                location("./admin.cfm",false);
+                location("/#request.rootDir#/admin.cfm",false);
         }
 
         return true;
