@@ -21,7 +21,7 @@ component{
 
     public boolean function onRequestStart(){
 		request.identityProvider  = "okta";
-		request.rootDir = "cfml-sso-okta/"
+		request.rootDir = "cfml-sso-demo-app/"
         request.siteURL     = "http" & (cgi.server_port_secure ? "s" : "") & ":" & "//" & cgi.server_name & ":" & cgi.server_port & "/" & request.rootDir;
 
 		if (structKeyExists(url,"reload")){
