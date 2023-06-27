@@ -17,7 +17,9 @@ This is a simple integration with SSO Identity providers, using Okta as the defa
 
 2. Configure this demo SAML app with the identity provider you are using (e.g., okta) and note the configuration settings as you will need them for the next step.
 
-3. Navigate to the main page of this demo app and you'll be instructed on how to configure your Identity Provider settings for this app.
+3. Create `/certs` and `/config` directories in the root folder. Place your Identify Provider certificate in `/certs` (e.g., okta.cert). Once you enter your config information via the application (step 4), the application will automatically create a JSON config file in the `/config` folder (e.g., okta.json)
+   
+4. Navigate to the main page of this demo app and you'll be instructed on how to configure your Identity Provider settings for this app.
 
 ## Contributing
 
